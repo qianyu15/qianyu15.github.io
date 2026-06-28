@@ -1,102 +1,248 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SYS.PORTFOLIO</title>
+  <title>AI Copypaste Engineer Portfolio</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    body {
+      background: radial-gradient(circle at top, #0b1220, #020617);
+      scroll-behavior: smooth;
+    }
+  </style>
 </head>
 
-<body class="bg-black text-gray-300 font-mono">
+<body class="text-white">
+<div id="root"></div>
 
-<!-- TOP BAR -->
-<header class="border-b border-gray-800 px-6 py-3 flex justify-between text-xs tracking-widest">
-  <div>SYS.PORTFOLIO v1.0</div>
-  <div id="status">LOADING...</div>
-</header>
+<script type="text/babel">
 
-<!-- USER PANEL -->
-<section class="grid md:grid-cols-3 border-b border-gray-800">
+const Section = React.forwardRef(({ title, children }, ref) => (
+  <section ref={ref} className="max-w-6xl mx-auto px-6 py-16 border-t border-white/10">
+    <h2 className="text-2xl font-bold mb-6">{title}</h2>
+    {children}
+  </section>
+));
 
-  <div class="p-6 border-r border-gray-800">
-    <div class="text-xs text-gray-500">IDENTITY</div>
-    <img id="avatar" class="w-16 h-16 mt-3 border border-gray-700" />
-    <div id="name" class="mt-3 text-sm">NULL</div>
-    <div id="bio" class="text-xs text-gray-500 mt-2"></div>
+const Card = ({ title, desc, extra }) => (
+  <div className="p-6 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition">
+    <h3 className="font-semibold text-lg">{title}</h3>
+    <p className="text-gray-400 mt-2 text-sm">{desc}</p>
+    {extra && <p className="text-xs text-gray-500 mt-3">{extra}</p>}
   </div>
+);
 
-  <div class="p-6 border-r border-gray-800">
-    <div class="text-xs text-gray-500">METRICS</div>
-    <div class="mt-3 text-sm">
-      FOLLOWERS: <span id="followers">0</span><br/>
-      REPOS: <span id="repos">0</span>
-    </div>
-  </div>
+const App = () => {
 
-  <div class="p-6">
-    <div class="text-xs text-gray-500">SYSTEM</div>
-    <div class="mt-3 text-xs text-gray-400">
-      STATUS: ONLINE<br/>
-      MODE: READ-ONLY UI<br/>
-      SOURCE: GitHub API
-    </div>
-  </div>
+  const refs = {
+    about: React.useRef(null),
+    skills: React.useRef(null),
+    projects: React.useRef(null),
+    experience: React.useRef(null),
+    contact: React.useRef(null),
+  };
 
-</section>
+  const scrollTo = (key) => {
+    refs[key].current?.scrollIntoView({ behavior: "smooth" });
+  };
 
-<!-- REPOSITORIES -->
-<section class="p-6">
+  const [repos, setRepos] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
 
-  <div class="text-xs text-gray-500 mb-4">REPOSITORIES</div>
+  React.useEffect(() => {
+    fetch("https://api.github.com/users/qianyu-08/repos")
+      .then(res => res.json())
+      .then(data => {
+        setRepos(data);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
 
-  <div id="repoList" class="grid md:grid-cols-3 gap-2"></div>
-
-</section>
-
-<script>
-const USER = "qianyu15";
-
-async function boot() {
-
-  document.getElementById("status").textContent = "SYNCING...";
-
-  const user = await fetch(`https://api.github.com/users/${USER}`).then(r => r.json());
-
-  document.getElementById("avatar").src = user.avatar_url;
-  document.getElementById("name").textContent = user.login.toUpperCase();
-  document.getElementById("bio").textContent = user.bio || "NO DESCRIPTION";
-
-  document.getElementById("followers").textContent = user.followers;
-  document.getElementById("repos").textContent = user.public_repos;
-
-  const repos = await fetch(`https://api.github.com/users/${USER}/repos?sort=updated`).then(r => r.json());
-
-  const container = document.getElementById("repoList");
-
-  repos.slice(0, 12).forEach(repo => {
-
-    const el = document.createElement("div");
-    el.className = "border border-gray-800 p-3 text-xs";
-
-    el.innerHTML = `
-      <div class="text-gray-400">${repo.name}</div>
-      <div class="text-gray-600 mt-1">${repo.language || "UNKNOWN"}</div>
-      <div class="mt-2 text-gray-700">
-        ★${repo.stargazers_count} FORK:${repo.forks_count}
-      </div>
-      <a href="${repo.html_url}" target="_blank" class="text-gray-500 mt-2 inline-block">
-        OPEN
-      </a>
-    `;
-
-    container.appendChild(el);
+  const [form, setForm] = React.useState({
+    name: "",
+    email: "",
+    message: ""
   });
 
-  document.getElementById("status").textContent = "ONLINE";
-}
+  const [status, setStatus] = React.useState("");
 
-boot();
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSend = async () => {
+
+    if (!form.name || !form.email || !form.message) {
+      setStatus("全部入力しろ");
+      return;
+    }
+
+    setStatus("送信中...");
+
+    try {
+      const res = await fetch("https://formspree.io/f/xykakpkg", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(form)
+      });
+
+      if (res.ok) {
+        setStatus("送信完了(実際に届いてる)");
+        setForm({ name: "", email: "", message: "" });
+      } else {
+        setStatus("送信失敗");
+      }
+
+    } catch (err) {
+      setStatus("通信エラー");
+    }
+  };
+
+  return (
+    <div>
+
+      {/* NAV */}
+      <header className="max-w-6xl mx-auto px-6 py-6 flex justify-between">
+        <h1 className="font-bold">AI COPYPASTE ENGINEER</h1>
+
+        <nav className="space-x-4 text-sm text-gray-300">
+          <button type="button" onClick={() => scrollTo("about")}>About</button>
+          <button type="button" onClick={() => scrollTo("skills")}>Skills</button>
+          <button type="button" onClick={() => scrollTo("projects")}>Projects</button>
+          <button type="button" onClick={() => scrollTo("experience")}>Experience</button>
+          <button type="button" onClick={() => scrollTo("contact")}>Contact</button>
+        </nav>
+      </header>
+
+      {/* HERO */}
+      <section className="max-w-6xl mx-auto px-6 py-24">
+        <h2 className="text-5xl font-bold">
+Qianyu Yang
+        </h2>
+
+        <div className="mt-8 flex gap-4">
+          <button type="button" onClick={() => scrollTo("projects")}
+            className="px-6 py-2 bg-white text-black rounded"
+          >
+            View Projects
+          </button>
+
+          <button type="button" onClick={() => scrollTo("contact")}
+            className="px-6 py-2 border border-white/20 rounded"
+          >
+            Contact
+          </button>
+        </div>
+      </section>
+
+      {/* ABOUT */}
+      <Section ref={refs.about} title="About">
+        <p className="text-gray-400">
+          AIコピペ開発で構成されたポートフォリオ。
+        </p>
+      </Section>
+
+      {/* SKILLS */}
+      <Section ref={refs.skills} title="Skills">
+        <div className="grid md:grid-cols-3 gap-4">
+          <Card title="Prompt Engineering" desc="曖昧な指示を構造化"/>
+          <Card title="AI Copypaste Dev" desc="生成コード統合"/>
+          <Card title="API Integration" desc="外部API利用"/>
+        </div>
+      </Section>
+
+      {/* PROJECTS */}
+      <Section ref={refs.projects} title="Projects (GitHub API)">
+        {loading ? (
+          <p className="text-gray-400">Loading...</p>
+        ) : (
+          <div className="grid md:grid-cols-3 gap-4">
+            {repos.slice(0, 9).map(repo => (
+              <Card
+                key={repo.id}
+                title={repo.name}
+                desc={repo.description || "No description"}
+                extra={`⭐ ${repo.stargazers_count}`}
+              />
+            ))}
+          </div>
+        )}
+      </Section>
+
+      {/* EXPERIENCE */}
+      <Section ref={refs.experience} title="Experience">
+        <div className="space-y-2 text-gray-400">
+          <p>2025 — AIコピペ開発開始</p>
+          <p>2026 — ReactをAI経由で使用</p>
+        </div>
+      </Section>
+
+      {/* CONTACT (FORMSPREE REAL SEND) */}
+      <Section ref={refs.contact} title="Contact">
+        <div className="max-w-md space-y-3">
+
+          <input
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            className="w-full p-3 bg-white/5 border border-white/10 rounded"
+            placeholder="Name"
+          />
+
+          <input
+            name="email"
+            value={form.email}
+            onChange={handleChange}
+            className="w-full p-3 bg-white/5 border border-white/10 rounded"
+            placeholder="Email"
+          />
+
+          <textarea
+            name="message"
+            value={form.message}
+            onChange={handleChange}
+            rows="4"
+            className="w-full p-3 bg-white/5 border border-white/10 rounded"
+            placeholder="Message"
+          />
+
+          <button
+            type="button"
+            onClick={handleSend}
+            className="px-6 py-2 bg-white text-black rounded font-medium"
+          >
+            Send
+          </button>
+
+          {status && (
+            <p className="text-sm text-gray-400">{status}</p>
+          )}
+
+        </div>
+      </Section>
+
+      {/* FOOTER */}
+      <footer className="text-center text-gray-500 py-10 border-t border-white/10">
+        © 2026 AI Copypaste Engineer
+      </footer>
+
+    </div>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+
 </script>
-
 </body>
 </html>
