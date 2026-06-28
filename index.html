@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -12,10 +11,37 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
   <style>
-    body {
-      background: radial-gradient(circle at top, #0b1220, #020617);
-      scroll-behavior: smooth;
+    :root{
+      --bg:#071025; /* deep navy */
+      --card:#071725;
+      --accent:#7ee787; /* dev green */
+      --muted:#94a3b8;
     }
+    html,body,#root{height:100%;}
+    body {
+      background: radial-gradient(circle at top, #030617, #02040a);
+      color: #e6eef8;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      scroll-behavior: smooth;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* developer look */
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace; }
+    .terminal {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(126,231,135,0.06);
+      box-shadow: 0 6px 30px rgba(2,6,23,0.6);
+    }
+
+    .badge { background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.03); padding:0.18rem 0.5rem; border-radius:999px; font-size:0.8rem }
+
+    /* small copy feedback */
+    .copied { position:relative; }
+    .copied::after{ content: "Copied"; position:absolute; right:100%; margin-right:0.4rem; top:50%; transform:translateY(-50%); font-size:0.75rem; color:var(--accent); opacity:0; transition:opacity .18s; }
+    .copied.show::after{ opacity:1; }
+
   </style>
 </head>
 
@@ -24,18 +50,24 @@
 
 <script type="text/babel">
 
-const Section = React.forwardRef(({ title, children }, ref) => (
-  <section ref={ref} className="max-w-6xl mx-auto px-6 py-16 border-t border-white/10">
-    <h2 className="text-2xl font-bold mb-6">{title}</h2>
+const IconGitHub = () => (
+  <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" className="inline-block mr-2" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M8 0C3.58 0 0 3.58 0 8a8 8 0 005.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2 .37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52 0-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.86 2.33.66.07-.52.28-.86.51-1.06-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.22 2.2.82a7.6 7.6 0 012 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.19 0 .21.15.46.55.38A8 8 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+);
+
+const Section = React.forwardRef(({ title, children, desc }, ref) => (
+  <section ref={ref} className="max-w-6xl mx-auto px-6 py-16 border-t border-white/6">
+    <h2 className="text-2xl font-bold mb-2 mono">{title}</h2>
+    {desc && <p className="text-sm text-gray-400 mb-4">{desc}</p>}
     {children}
   </section>
 ));
 
-const Card = ({ title, desc, extra }) => (
-  <div className="p-6 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition">
-    <h3 className="font-semibold text-lg">{title}</h3>
+const Card = ({ title, desc, extra, actions, className }) => (
+  <div className={`p-5 rounded-xl terminal ${className||''}`}>
+    <h3 className="font-semibold text-lg mono">{title}</h3>
     <p className="text-gray-400 mt-2 text-sm">{desc}</p>
-    {extra && <p className="text-xs text-gray-500 mt-3">{extra}</p>}
+    {extra && <p className="text-xs text-gray-500 mt-3 mono">{extra}</p>}
+    {actions && <div className="mt-3">{actions}</div>}
   </div>
 );
 
@@ -57,113 +89,124 @@ const App = () => {
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    fetch("https://api.github.com/users/qianyu15/repos")
+    fetch("https://api.github.com/users/qianyu15/repos?per_page=100")
       .then(res => res.json())
       .then(data => {
-        setRepos(data);
+        if (Array.isArray(data)) {
+          // sort by stars desc
+          data.sort((a,b) => b.stargazers_count - a.stargazers_count);
+          setRepos(data);
+        }
         setLoading(false);
       })
       .catch(() => setLoading(false));
   }, []);
 
-  const [form, setForm] = React.useState({
-    name: "",
-    email: "",
-    message: ""
-  });
-
+  const [form, setForm] = React.useState({ name: "", email: "", message: "" });
   const [status, setStatus] = React.useState("");
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSend = async () => {
-
-    if (!form.name || !form.email || !form.message) {
-      setStatus("全部入力しろ");
-      return;
-    }
-
+    if (!form.name || !form.email || !form.message) { setStatus("全部入力しろ"); return; }
     setStatus("送信中...");
-
     try {
       const res = await fetch("https://formspree.io/f/xykakpkg", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
         body: JSON.stringify(form)
       });
+      if (res.ok) { setStatus("送信完了(実際に届いてる)"); setForm({ name: "", email: "", message: "" }); }
+      else setStatus("送信失敗");
+    } catch (err) { setStatus("通信エラー"); }
+  };
 
-      if (res.ok) {
-        setStatus("送信完了(実際に届いてる)");
-        setForm({ name: "", email: "", message: "" });
-      } else {
-        setStatus("送信失敗");
-      }
-
-    } catch (err) {
-      setStatus("通信エラー");
-    }
+  const copy = (text, el) => {
+    navigator.clipboard?.writeText(text).then(() => {
+      el.classList.add('show');
+      setTimeout(() => el.classList.remove('show'), 1200);
+    }).catch(()=>{});
   };
 
   return (
     <div>
 
       {/* NAV */}
-      <header className="max-w-6xl mx-auto px-6 py-6 flex justify-between">
-        <h1 className="font-bold">AI COPYPASTE ENGINEER</h1>
+      <header className="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="px-3 py-1 border rounded mono text-sm bg-white/3">DEV</div>
+          <h1 className="font-bold mono flex items-center"> <IconGitHub/> Qianyu Yang</h1>
+        </div>
 
-        <nav className="space-x-4 text-sm text-gray-300">
-          <button type="button" onClick={() => scrollTo("about")}>About</button>
-          <button type="button" onClick={() => scrollTo("skills")}>Skills</button>
-          <button type="button" onClick={() => scrollTo("projects")}>Projects</button>
-          <button type="button" onClick={() => scrollTo("experience")}>Experience</button>
-          <button type="button" onClick={() => scrollTo("contact")}>Contact</button>
+        <nav className="space-x-4 text-sm text-gray-300 mono">
+          <button type="button" onClick={() => scrollTo("about")} className="hover:underline">About</button>
+          <button type="button" onClick={() => scrollTo("skills")} className="hover:underline">Skills</button>
+          <button type="button" onClick={() => scrollTo("projects")} className="hover:underline">Projects</button>
+          <button type="button" onClick={() => scrollTo("experience")} className="hover:underline">Experience</button>
+          <button type="button" onClick={() => scrollTo("contact")} className="hover:underline">Contact</button>
         </nav>
       </header>
 
       {/* HERO */}
-      <section className="max-w-6xl mx-auto px-6 py-24">
-        <h2 className="text-5xl font-bold">
-Qianyu Yang
-        </h2>
+      <section className="max-w-6xl mx-auto px-6 py-20">
+        <div className="grid md:grid-cols-2 gap-6 items-start">
+          <div>
+            <h2 className="text-5xl font-bold mono">Qianyu Yang</h2>
+            <p className="mt-4 text-gray-400 max-w-xl">AI Copypaste Engineer — 自動生成コードを実用レベルへ統合するのが得意です。等幅フォントでスニペットやクローンコマンドを見せる UI を重視。</p>
 
-        <div className="mt-8 flex gap-4">
-          <button type="button" onClick={() => scrollTo("projects")}
-            className="px-6 py-2 bg-white text-black rounded"
-          >
-            View Projects
-          </button>
+            <div className="mt-6 flex gap-3">
+              <button onClick={() => scrollTo('projects')} className="px-6 py-2 bg-white text-black rounded mono">View Projects</button>
+              <a href="https://github.com/qianyu15" target="_blank" rel="noreferrer" className="px-6 py-2 border border-white/20 rounded mono">View on GitHub</a>
+            </div>
 
-          <button type="button" onClick={() => scrollTo("contact")}
-            className="px-6 py-2 border border-white/20 rounded"
-          >
-            Contact
-          </button>
+            <div className="mt-6 terminal p-4 rounded text-sm mono">
+              <code>
+{`const me = {
+  name: 'Qianyu Yang',
+  role: 'AI Copypaste Engineer',
+  focus: ['React', 'AI prompt', 'API integration']
+}`}
+              </code>
+            </div>
+          </div>
+
+          <div>
+            <div className="terminal p-4 rounded">
+              <div className="flex justify-between items-center text-sm text-gray-400 mb-2">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-red-500"></span>
+                  <span className="w-2 h-2 rounded-full bg-yellow-400"></span>
+                  <span className="w-2 h-2 rounded-full bg-green-500"></span>
+                </div>
+                <div className="text-xs text-gray-500">portfolio@dev</div>
+              </div>
+
+              <div className="mono text-sm">
+                <div className="text-green-400">➜</div>
+                <div>Available: React, TypeScript, Node, Tailwind, GPT-API</div>
+                <div className="mt-2 text-xs text-gray-400">Top repo: {repos[0]?.name || '—' } ⭐ {repos[0]?.stargazers_count || 0}</div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* ABOUT */}
-      <Section ref={refs.about} title="About">
-        <p className="text-gray-400">
-          AIコピペ開発で構成されたポートフォリオ。
-        </p>
+      <Section ref={refs.about} title="About" desc="開発者向けに見やすく、等幅・ターミナル風デザインにしました。">
+        <p className="text-gray-400 mono">AIコピペ開発で構成されたポートフォリオ。生成コードを検証・統合し、実運用へ落とし込むエンジニアリングを得意とします。</p>
       </Section>
 
       {/* SKILLS */}
       <Section ref={refs.skills} title="Skills">
-        <div className="grid md:grid-cols-3 gap-4">
-          <Card title="Prompt Engineering" desc="曖昧な指示を構造化"/>
-          <Card title="AI Copypaste Dev" desc="生成コード統合"/>
-          <Card title="API Integration" desc="外部API利用"/>
+        <div className="flex flex-wrap gap-3">
+          {['Prompt Engineering','React','TypeScript','Node.js','API Integration','CI/CD','Testing'].map(s => (
+            <div key={s} className="badge mono">{s}</div>
+          ))}
         </div>
       </Section>
 
       {/* PROJECTS */}
-      <Section ref={refs.projects} title="Projects (GitHub API)">
+      <Section ref={refs.projects} title="Projects (GitHub API)" desc="スター順に上位を表示。クローンコマンドのコピーが可能です。">
         {loading ? (
           <p className="text-gray-400">Loading...</p>
         ) : (
@@ -171,9 +214,20 @@ Qianyu Yang
             {repos.slice(0, 9).map(repo => (
               <Card
                 key={repo.id}
-                title={repo.name}
+                title={<div className="flex items-center justify-between"><span className="mono">{repo.name}</span><span className="text-xs text-gray-400">{repo.language || '—'}</span></div>}
                 desc={repo.description || "No description"}
-                extra={`⭐ ${repo.stargazers_count}`}
+                extra={<div className="flex items-center justify-between mt-2">
+                  <div className="text-xs text-gray-400 mono">⭐ {repo.stargazers_count} • Forks: {repo.forks_count}</div>
+                  <div className="flex items-center gap-2">
+                    <a className="text-xs text-green-300 mono border border-green-500/10 px-2 py-1 rounded" href={repo.html_url} target="_blank" rel="noreferrer">Open</a>
+                    <button
+                      onClick={(e) => copy(`git clone ${repo.clone_url}`, e.currentTarget)}
+                      className="text-xs mono px-2 py-1 border rounded bg-white/3"
+                      title="Copy clone command"
+                    >Copy</button>
+                  </div>
+                </div>}
+                className="h-full"
               />
             ))}
           </div>
@@ -182,7 +236,7 @@ Qianyu Yang
 
       {/* EXPERIENCE */}
       <Section ref={refs.experience} title="Experience">
-        <div className="space-y-2 text-gray-400">
+        <div className="space-y-2 text-gray-400 mono">
           <p>2025 — AIコピペ開発開始</p>
           <p>2026 — ReactをAI経由で使用</p>
         </div>
@@ -196,7 +250,7 @@ Qianyu Yang
             name="name"
             value={form.name}
             onChange={handleChange}
-            className="w-full p-3 bg-white/5 border border-white/10 rounded"
+            className="w-full p-3 bg-white/3 border border-white/6 rounded mono"
             placeholder="Name"
           />
 
@@ -204,7 +258,7 @@ Qianyu Yang
             name="email"
             value={form.email}
             onChange={handleChange}
-            className="w-full p-3 bg-white/5 border border-white/10 rounded"
+            className="w-full p-3 bg-white/3 border border-white/6 rounded mono"
             placeholder="Email"
           />
 
@@ -213,28 +267,28 @@ Qianyu Yang
             value={form.message}
             onChange={handleChange}
             rows="4"
-            className="w-full p-3 bg-white/5 border border-white/10 rounded"
+            className="w-full p-3 bg-white/3 border border-white/6 rounded mono"
             placeholder="Message"
           />
 
           <button
             type="button"
             onClick={handleSend}
-            className="px-6 py-2 bg-white text-black rounded font-medium"
+            className="px-6 py-2 bg-white text-black rounded font-medium mono"
           >
             Send
           </button>
 
           {status && (
-            <p className="text-sm text-gray-400">{status}</p>
+            <p className="text-sm text-gray-400 mono">{status}</p>
           )}
 
         </div>
       </Section>
 
       {/* FOOTER */}
-      <footer className="text-center text-gray-500 py-10 border-t border-white/10">
-        © 2026 AI Copypaste Engineer
+      <footer className="text-center text-gray-500 py-10 border-t border-white/6 mono">
+        © 2026 AI Copypaste Engineer — <a href="https://github.com/qianyu15" className="text-green-300">@qianyu15</a>
       </footer>
 
     </div>
