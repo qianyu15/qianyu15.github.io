@@ -57,7 +57,7 @@ const App = () => {
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    fetch("https://api.github.com/users/qianyu-08/repos")
+    fetch("https://api.github.com/users/qianyu15/repos")
       .then(res => res.json())
       .then(data => {
         setRepos(data);
