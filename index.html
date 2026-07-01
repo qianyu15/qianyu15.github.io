@@ -3,336 +3,149 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AI Copypaste Engineer Portfolio</title>
+  <title>Portfolio</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-  <style>
-    body {
-      background: linear-gradient(135deg, #000000 0%, #1a0033 50%, #000000 100%);
-      scroll-behavior: smooth;
-      overflow-x: hidden;
-    }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 
-    @keyframes pulse-aggressive {
-      0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 128, 0.3); }
-      50% { box-shadow: 0 0 40px rgba(255, 0, 128, 0.8); }
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
     }
-
-    @keyframes glitch {
-      0% { transform: translate(0); }
-      20% { transform: translate(-2px, 2px); }
-      40% { transform: translate(-2px, -2px); }
-      60% { transform: translate(2px, 2px); }
-      80% { transform: translate(2px, -2px); }
-      100% { transform: translate(0); }
-    }
-
-    .glitch-text {
-      animation: glitch 0.3s infinite;
-      color: #ff0080;
-      text-shadow: 
-        2px 0 #00ffff,
-        -2px 0 #ff00ff,
-        0 2px #ffff00;
-      font-weight: 900;
-      letter-spacing: 2px;
-    }
-
-    .pulse-neon {
-      animation: pulse-aggressive 1.5s infinite;
-    }
-
-    .border-neon {
-      border: 2px solid #ff0080;
-      box-shadow: inset 0 0 10px rgba(255, 0, 128, 0.2);
-    }
-
-    .border-neon-cyan {
-      border: 2px solid #00ffff;
-      box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.2);
-    }
-
-    .glow-pink {
-      box-shadow: 0 0 30px rgba(255, 0, 128, 0.6), 0 0 60px rgba(255, 0, 128, 0.3);
-    }
-
-    .glow-cyan {
-      box-shadow: 0 0 30px rgba(0, 255, 255, 0.6), 0 0 60px rgba(0, 255, 255, 0.3);
-    }
-
-    button:hover {
-      transform: scale(1.05);
-      transition: all 0.2s;
-    }
-
-    .card-aggressive {
-      background: linear-gradient(135deg, rgba(255, 0, 128, 0.1) 0%, rgba(0, 255, 255, 0.05) 100%);
-      border: 2px solid rgba(255, 0, 128, 0.5);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card-aggressive::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(45deg, transparent 30%, rgba(255, 0, 128, 0.1) 50%, transparent 70%);
-      animation: shimmer 3s infinite;
-    }
-
-    @keyframes shimmer {
-      0% { transform: translate(-100%, -100%); }
-      100% { transform: translate(100%, 100%); }
-    }
-  </style>
+  </script>
 </head>
 
-<body class="text-white">
-<div id="root"></div>
+<body class="bg-black text-zinc-100 font-mono selection:bg-zinc-700">
 
-<script type="text/babel">
+<!-- HERO -->
+<header class="relative border-b border-zinc-900">
+  <div class="max-w-5xl mx-auto px-6 py-28">
 
-const Section = React.forwardRef(({ title, children }, ref) => (
-  <section ref={ref} className="max-w-6xl mx-auto px-6 py-16 border-t-4 border-pink-600">
-    <h2 className="text-4xl font-black mb-8 glitch-text">{title}</h2>
-    {children}
-  </section>
-));
+    <p class="text-zinc-500 text-sm tracking-widest">PORTFOLIO</p>
 
-const Card = ({ title, desc, extra }) => (
-  <div className="card-aggressive p-6 rounded-lg hover:glow-pink transition duration-300 transform hover:scale-105 relative z-10">
-    <h3 className="font-black text-lg text-cyan-300">{title}</h3>
-    <p className="text-pink-300 mt-2 text-sm font-semibold">{desc}</p>
-    {extra && <p className="text-xs text-cyan-400 mt-3 font-bold">{extra}</p>}
-  </div>
-);
+    <h1 class="text-5xl md:text-7xl font-bold mt-4 leading-tight">
+      Your Name
+    </h1>
 
-const App = () => {
+    <p class="text-zinc-400 mt-6 max-w-xl text-lg">
+      Full Stack Developer building web apps with HTML, CSS, JavaScript, Python.
+    </p>
 
-  const refs = {
-    about: React.useRef(null),
-    skills: React.useRef(null),
-    projects: React.useRef(null),
-    experience: React.useRef(null),
-    contact: React.useRef(null),
-  };
-
-  const scrollTo = (key) => {
-    refs[key].current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const [repos, setRepos] = React.useState([]);
-  const [loading, setLoading] = React.useState(true);
-
-  React.useEffect(() => {
-    fetch("https://api.github.com/users/qianyu15/repos")
-      .then(res => res.json())
-      .then(data => {
-        setRepos(data);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, []);
-
-  const [form, setForm] = React.useState({
-    name: "",
-    email: "",
-    message: ""
-  });
-
-  const [status, setStatus] = React.useState("");
-
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSend = async () => {
-
-    if (!form.name || !form.email || !form.message) {
-      setStatus("全部入力しろ");
-      return;
-    }
-
-    setStatus("送信中...");
-
-    try {
-      const res = await fetch("https://formspree.io/f/xykakpkg", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify(form)
-      });
-
-      if (res.ok) {
-        setStatus("送信完了(実際に届いてる)");
-        setForm({ name: "", email: "", message: "" });
-      } else {
-        setStatus("送信失敗");
-      }
-
-    } catch (err) {
-      setStatus("通信エラー");
-    }
-  };
-
-  return (
-    <div>
-
-      {/* NAV */}
-      <header className="max-w-6xl mx-auto px-6 py-6 flex justify-between items-center border-b-2 border-pink-600">
-        <h1 className="font-black text-2xl glitch-text">⚡ AI COPYPASTE ⚡</h1>
-
-        <nav className="space-x-6 text-sm font-black text-cyan-300">
-          <button type="button" onClick={() => scrollTo("about")} className="hover:text-pink-500 transition">About</button>
-          <button type="button" onClick={() => scrollTo("skills")} className="hover:text-pink-500 transition">Skills</button>
-          <button type="button" onClick={() => scrollTo("projects")} className="hover:text-pink-500 transition">Projects</button>
-          <button type="button" onClick={() => scrollTo("experience")} className="hover:text-pink-500 transition">Experience</button>
-          <button type="button" onClick={() => scrollTo("contact")} className="hover:text-pink-500 transition">Contact</button>
-        </nav>
-      </header>
-
-      {/* HERO */}
-      <section className="max-w-6xl mx-auto px-6 py-32 text-center">
-        <div className="mb-4 text-5xl">⚡🔥💻</div>
-        <h2 className="text-7xl font-black mb-4 glitch-text">
-          QIANYU YANG
-        </h2>
-        <p className="text-3xl font-black text-cyan-300 mb-8">AI COPYPASTE ENGINEER</p>
-        <div className="text-xl font-bold text-pink-400 mb-12">
-          コードを貼る。AIに食わせる。完成。
-        </div>
-
-        <div className="mt-12 flex gap-6 justify-center">
-          <button type="button" onClick={() => scrollTo("projects")}
-            className="px-8 py-4 bg-pink-600 text-black rounded font-black text-lg border-neon glow-pink hover:bg-pink-500"
-          >
-            🚀 PROJECTS
-          </button>
-
-          <button type="button" onClick={() => scrollTo("contact")}
-            className="px-8 py-4 border-2 border-cyan-400 text-cyan-300 rounded font-black text-lg glow-cyan hover:bg-cyan-900/30"
-          >
-            📧 CONTACT
-          </button>
-        </div>
-      </section>
-
-      {/* ABOUT */}
-      <Section ref={refs.about} title="🎯 ABOUT">
-        <p className="text-xl font-bold text-cyan-300 mb-4">
-          AIコピペ開発で構成されたポートフォリオ。
-        </p>
-        <p className="text-lg text-pink-300 font-semibold">
-          曖昧な指示を構造化して、生成コードを統合する。それが俺の流儀だ。
-        </p>
-      </Section>
-
-      {/* SKILLS */}
-      <Section ref={refs.skills} title="⚙️ SKILLS">
-        <div className="grid md:grid-cols-3 gap-6">
-          <Card title="🧠 Prompt Engineering" desc="曖昧な指示を構造化"/>
-          <Card title="🤖 AI Copypaste Dev" desc="生成コード統合＆最適化"/>
-          <Card title="🔌 API Integration" desc="外部API完全統合"/>
-        </div>
-      </Section>
-
-      {/* PROJECTS */}
-      <Section ref={refs.projects} title="💻 PROJECTS (GitHub API)">
-        {loading ? (
-          <p className="text-xl font-bold text-pink-400 animate-pulse">📡 Loading...</p>
-        ) : (
-          <div className="grid md:grid-cols-3 gap-6">
-            {repos.slice(0, 9).map(repo => (
-              <Card
-                key={repo.id}
-                title={repo.name}
-                desc={repo.description || "No description"}
-                extra={`⭐ ${repo.stargazers_count} | 📌 ${repo.language || 'N/A'}`}
-              />
-            ))}
-          </div>
-        )}
-      </Section>
-
-      {/* EXPERIENCE */}
-      <Section ref={refs.experience} title="📅 EXPERIENCE">
-        <div className="space-y-4 text-lg font-bold">
-          <div className="border-l-4 border-pink-600 pl-4">
-            <p className="text-cyan-300">2025 — AIコピペ開発開始 🔥</p>
-            <p className="text-pink-400 text-sm">第一次AI革命勃発</p>
-          </div>
-          <div className="border-l-4 border-cyan-400 pl-4">
-            <p className="text-cyan-300">2026 — ReactをAI経由で使用 ⚡</p>
-            <p className="text-pink-400 text-sm">フロントエンド制覇完了</p>
-          </div>
-        </div>
-      </Section>
-
-      {/* CONTACT (FORMSPREE REAL SEND) */}
-      <Section ref={refs.contact} title="📬 CONTACT">
-        <div className="max-w-md space-y-4 border-neon p-8 rounded-lg">
-
-          <input
-            name="name"
-            value={form.name}
-            onChange={handleChange}
-            className="w-full p-4 bg-black border-2 border-pink-600 rounded font-bold text-cyan-300 placeholder-pink-600/50 focus:outline-none focus:glow-pink"
-            placeholder="YOUR NAME"
-          />
-
-          <input
-            name="email"
-            value={form.email}
-            onChange={handleChange}
-            className="w-full p-4 bg-black border-2 border-cyan-400 rounded font-bold text-cyan-300 placeholder-cyan-400/50 focus:outline-none focus:glow-cyan"
-            placeholder="YOUR EMAIL"
-          />
-
-          <textarea
-            name="message"
-            value={form.message}
-            onChange={handleChange}
-            rows="4"
-            className="w-full p-4 bg-black border-2 border-pink-600 rounded font-bold text-cyan-300 placeholder-pink-600/50 focus:outline-none focus:glow-pink"
-            placeholder="MESSAGE"
-          />
-
-          <button
-            type="button"
-            onClick={handleSend}
-            className="w-full px-6 py-3 bg-pink-600 text-black rounded font-black text-lg border-neon glow-pink hover:bg-pink-500 transition"
-          >
-            🚀 SEND NOW
-          </button>
-
-          {status && (
-            <p className="text-sm font-bold text-cyan-300 text-center">{status}</p>
-          )}
-
-        </div>
-      </Section>
-
-      {/* FOOTER */}
-      <footer className="text-center font-black py-10 border-t-4 border-pink-600">
-        <p className="text-cyan-300 text-lg">© 2026 AI COPYPASTE ENGINEER ⚡</p>
-        <p className="text-pink-500 text-sm mt-2">POWERED BY: AI + COPY + PASTE + 🔥</p>
-      </footer>
-
+    <div class="mt-10 flex gap-4">
+      <a href="#projects" class="px-5 py-2 bg-white text-black rounded-md hover:bg-zinc-200 transition">
+        View Projects
+      </a>
+      <a href="#contact" class="px-5 py-2 border border-zinc-700 rounded-md hover:border-zinc-400 transition">
+        Contact
+      </a>
     </div>
-  );
-};
 
-ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+  </div>
+</header>
 
-</script>
+<main class="max-w-5xl mx-auto px-6 py-20 space-y-24">
+
+<!-- ABOUT -->
+<section>
+  <h2 class="text-xl text-zinc-400 mb-6 tracking-widest">ABOUT</h2>
+
+  <div class="border border-zinc-900 rounded-xl p-6 bg-zinc-950">
+    <p class="text-zinc-300 leading-relaxed">
+      Webアプリケーションの設計から実装までを一貫して行う開発者。
+      UIとロジックの両面を扱い、小規模プロダクトを素早く形にすることを得意とする。
+    </p>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section>
+  <h2 class="text-xl text-zinc-400 mb-6 tracking-widest">SKILLS</h2>
+
+  <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+    <div class="border border-zinc-900 p-4 rounded-lg bg-zinc-950">HTML / CSS</div>
+    <div class="border border-zinc-900 p-4 rounded-lg bg-zinc-950">JavaScript</div>
+    <div class="border border-zinc-900 p-4 rounded-lg bg-zinc-950">Node.js</div>
+    <div class="border border-zinc-900 p-4 rounded-lg bg-zinc-950">Python</div>
+    <div class="border border-zinc-900 p-4 rounded-lg bg-zinc-950">REST API</div>
+    <div class="border border-zinc-900 p-4 rounded-lg bg-zinc-950">Git / GitHub</div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <h2 class="text-xl text-zinc-400 mb-6 tracking-widest">PROJECTS</h2>
+
+  <div class="space-y-6">
+
+    <article class="border border-zinc-900 rounded-xl p-6 bg-zinc-950 hover:border-zinc-700 transition">
+      <h3 class="text-2xl font-semibold">Terminal Portfolio System</h3>
+      <p class="text-zinc-400 mt-3">
+        CLI風インターフェースで操作するポートフォリオ。コマンドベースで情報を閲覧可能。
+      </p>
+
+      <div class="mt-4 text-sm text-zinc-500">
+        Tech: HTML / CSS / JS
+      </div>
+
+      <div class="mt-5 flex gap-4">
+        <a class="text-zinc-200 hover:text-white underline" href="#">GitHub</a>
+        <a class="text-zinc-200 hover:text-white underline" href="#">Live</a>
+      </div>
+    </article>
+
+    <article class="border border-zinc-900 rounded-xl p-6 bg-zinc-950 hover:border-zinc-700 transition">
+      <h3 class="text-2xl font-semibold">Task Manager</h3>
+      <p class="text-zinc-400 mt-3">
+        ローカルストレージを使った軽量タスク管理アプリ。CRUD操作対応。
+      </p>
+
+      <div class="mt-4 text-sm text-zinc-500">
+        Tech: JavaScript
+      </div>
+
+      <div class="mt-5 flex gap-4">
+        <a class="text-zinc-200 hover:text-white underline" href="#">GitHub</a>
+        <a class="text-zinc-200 hover:text-white underline" href="#">Live</a>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <h2 class="text-xl text-zinc-400 mb-6 tracking-widest">CONTACT</h2>
+
+  <div class="border border-zinc-900 rounded-xl p-6 bg-zinc-950 space-y-2">
+
+    <p>Email: example@mail.com</p>
+    <p>GitHub: https://github.com/yourname</p>
+    <p>Location: Japan</p>
+
+    <div class="pt-4">
+      <a href="mailto:example@mail.com"
+         class="inline-block px-5 py-2 bg-white text-black rounded-md hover:bg-zinc-200 transition">
+        Send Email
+      </a>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer class="border-t border-zinc-900 py-10 text-center text-zinc-600">
+  © 2026 Your Name
+</footer>
+
 </body>
 </html>
