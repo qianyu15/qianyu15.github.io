@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>404 Not Found</title>
+  <style>
+    body {
+      background: #000080;
+      color: #00ff00;
+      font-family: "Courier New", monospace;
+      text-align: center;
+      padding-top: 10vh;
+    }
+
+    .box {
+      border: 3px double #00ff00;
+      display: inline-block;
+      padding: 30px;
+      background: black;
+    }
+
+    h1 {
+      font-size: 48px;
+      margin: 0;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    .ascii {
+      white-space: pre;
+      font-size: 14px;
+      margin-top: 20px;
+    }
+
+    .link {
+      margin-top: 20px;
+      display: block;
+      color: yellow;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .counter {
+      margin-top: 20px;
+      font-size: 12px;
+    }
+
+    .marquee {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: black;
+      color: cyan;
+      padding: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box">
+    <h1>404 ERROR</h1>
+    <p>PAGE NOT FOUND</p>
+
+    <div class="ascii">
+   .----.
+  /      \
+ |  X  X |
+ |   --  |
+  \______/   ← サーバーも困惑中
+    </div>
+
+    <a class="link" href="/">← ホームに戻る（安全な場所）</a>
+
+    <div class="counter">
+      あなたはこのエラーを見た <span id="count">0</span> 人目の訪問者です
+    </div>
+  </div>
+
+  <div class="marquee">
+    <marquee>WELCOME TO THE INTERNET • BEST VIEWED WITH NETSCAPE NAVIGATOR • UNDER CONSTRUCTION</marquee>
+  </div>
+
+  <script>
+    let c = localStorage.getItem("errorCount") || 0;
+    c++;
+    localStorage.setItem("errorCount", c);
+    document.getElementById("count").textContent = c;
+  </script>
+
+</body>
+</html>

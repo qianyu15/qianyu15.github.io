@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Qianyu Yang | Engineer Portfolio</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        mono: ['JetBrains Mono', 'monospace']
+      }
+    }
+  }
+}
+</script>
+
+</head>
+
+<body class="bg-black text-white font-mono">
+
+<header class="max-w-5xl mx-auto p-8 flex justify-between">
+  <div class="text-xl font-bold">
+    QIANYU.dev
+  </div>
+
+  <nav class="space-x-6 text-gray-400">
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+
+<section class="max-w-5xl mx-auto px-8 py-24">
+
+<p class="text-green-400">
+> booting portfolio...
+</p>
+
+<h1 class="text-5xl font-bold mt-6">
+Qianyu Yang
+</h1>
+
+<p class="mt-4 text-gray-400 text-xl">
+Software Engineer / Creator
+</p>
+
+<p class="mt-8 max-w-xl text-gray-300">
+Web technologyを中心に、
+実験的なツールやOSSプロジェクトを開発しています。
+</p>
+
+<div class="mt-10 flex gap-4">
+
+<a href="https://github.com/"
+class="border border-white px-6 py-3 hover:bg-white hover:text-black transition">
+GitHub
+</a>
+
+<a href="#projects"
+class="border border-gray-700 px-6 py-3 hover:border-white transition">
+Projects
+</a>
+
+</div>
+
+</section>
+
+
+
+<section id="about" class="max-w-5xl mx-auto px-8 py-16">
+
+<h2 class="text-2xl font-bold mb-8">
+# About
+</h2>
+
+
+<div class="border border-gray-800 p-6">
+
+<p>
+Name: Qianyu Yang
+</p>
+
+<p>
+Role: Engineer
+</p>
+
+<p>
+Focus:
+HTML / CSS / JavaScript / Python / Node.js
+</p>
+
+</div>
+
+</section>
+
+
+
+<section id="projects" class="max-w-5xl mx-auto px-8 py-16">
+
+<h2 class="text-2xl font-bold mb-8">
+# Projects
+</h2>
+
+
+<div class="grid md:grid-cols-2 gap-6">
+
+
+<div class="border border-gray-800 p-6 hover:border-green-400 transition">
+
+<h3 class="text-xl font-bold">
+nl-runtime
+</h3>
+
+<p class="text-gray-400 mt-3">
+日本語自然言語からJavaScriptを実行する実験的ランタイム。
+</p>
+
+</div>
+
+
+
+<div class="border border-gray-800 p-6 hover:border-green-400 transition">
+
+<h3 class="text-xl font-bold">
+grass-svg-api
+</h3>
+
+<p class="text-gray-400 mt-3">
+GitHub Contribution GraphをSVG化するAPI。
+</p>
+
+</div>
+
+
+
+<div class="border border-gray-800 p-6 hover:border-green-400 transition">
+
+<h3 class="text-xl font-bold">
+dom-physics-engine
+</h3>
+
+<p class="text-gray-400 mt-3">
+DOM要素を使った物理演算実験。
+</p>
+
+</div>
+
+
+
+<div class="border border-gray-800 p-6 hover:border-green-400 transition">
+
+<h3 class="text-xl font-bold">
+hacker-console
+</h3>
+
+<p class="text-gray-400 mt-3">
+ブラウザ上で動くハッカー風コンソールUI。
+</p>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<section id="contact" class="max-w-5xl mx-auto px-8 py-16">
+
+<h2 class="text-2xl font-bold mb-8">
+# Contact
+</h2>
+
+<form action="https://formspree.io/f/xwvdykqp" method="POST" class="space-y-5 max-w-xl">
+
+<input
+name="name"
+class="w-full bg-transparent border-b border-gray-700 p-3 outline-none"
+placeholder="Name">
+
+<input
+name="email"
+type="email"
+class="w-full bg-transparent border-b border-gray-700 p-3 outline-none"
+placeholder="Email">
+
+<textarea
+name="message"
+class="w-full bg-transparent border border-gray-700 p-3 h-32"
+placeholder="Message"></textarea>
+
+<button
+type="submit"
+class="border border-white px-8 py-3 hover:bg-white hover:text-black transition">
+Send
+</button>
+
+</form>
+
+</section>
+
+
+
+<footer class="border-t border-gray-900 p-8 text-center text-gray-500">
+
+© 2026 Qianyu Yang
+
+</footer>
+
+
+</body>
+</html>
