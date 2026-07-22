@@ -362,31 +362,43 @@
 
 
         <!-- Contact Cards -->
-    <!-- Contact Cards -->
-<div class="flex flex-wrap gap-4">
+ <!-- Contact Cards -->
+<div class="space-y-4">
 
   <!-- Email -->
   <a
     href="mailto:qianyuyang.vip@gmail.com"
-    aria-label="Email"
-    class="w-14 h-14 flex items-center justify-center rounded-xl bg-blue-100 text-blue-600 hover:bg-blue-200 hover:scale-105 transition"
+    class="flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-2xl hover:shadow-md hover:border-gray-300 transition group"
   >
 
-    <!-- Mail Icon -->
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="w-9 h-9"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-      stroke-width="2"
+    <div
+      class="w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-xl bg-blue-100 text-blue-600 group-hover:bg-blue-200 transition"
     >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        d="M3 8l9 6 9-6M5 5h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"
-      />
-    </svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-9 h-9"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M3 8l9 6 9-6M5 5h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"
+        />
+      </svg>
+    </div>
+
+    <div class="min-w-0">
+      <p class="text-sm text-gray-500">
+        Email
+      </p>
+
+      <p class="font-medium text-gray-900 truncate">
+        qianyuyang.vip@gmail.com
+      </p>
+    </div>
 
   </a>
 
@@ -396,30 +408,42 @@
     href="https://github.com/qianyu15"
     target="_blank"
     rel="noopener noreferrer"
-    aria-label="GitHub"
-    class="w-14 h-14 flex items-center justify-center rounded-xl bg-gray-900 text-white hover:bg-gray-700 hover:scale-105 transition"
+    class="flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-2xl hover:shadow-md hover:border-gray-300 transition group"
   >
 
-    <!-- GitHub Icon -->
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="w-9 h-9"
-      viewBox="0 0 24 24"
-      fill="currentColor"
+    <div
+      class="w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-xl bg-gray-900 text-white group-hover:bg-gray-700 transition"
     >
-      <path
-        d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.49.5.09.66-.22.66-.48
-        0-.24-.01-.87-.01-1.7-2.78.6-3.37-1.34-3.37-1.34-.45-1.15-1.11-1.46-1.11-1.46
-        -.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83
-        .09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94
-        0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65
-        0 0 .84-.27 2.75 1.02A9.56 9.56 0 0112 6.84c.85 0 1.7.11 2.5.34
-        1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65
-        .64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93
-        .36.31.68.92.68 1.85 0 1.34-.01 2.42-.01 2.75
-        0 .27.18.58.67.48A10.01 10.01 0 0022 12C22 6.48 17.52 2 12 2z"
-      />
-    </svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-9 h-9"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path
+          d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.49.5.09.66-.22.66-.48
+          0-.24-.01-.87-.01-1.7-2.78.6-3.37-1.34-3.37-1.34-.45-1.15-1.11-1.46-1.11-1.46
+          -.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83
+          .09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94
+          0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65
+          0 0 .84-.27 2.75 1.02A9.56 9.56 0 0112 6.84c.85 0 1.7.11 2.5.34
+          1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65
+          .64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93
+          .36.31.68.92.68 1.85 0 1.34-.01 2.42-.01 2.75
+          0 .27.18.58.67.48A10.01 10.01 0 0022 12C22 6.48 17.52 2 12 2z"
+        />
+      </svg>
+    </div>
+
+    <div class="min-w-0">
+      <p class="text-sm text-gray-500">
+        GitHub
+      </p>
+
+      <p class="font-medium text-gray-900 truncate">
+        qianyu15
+      </p>
+    </div>
 
   </a>
 
@@ -429,21 +453,33 @@
     href="https://x.com/q1anyuyang"
     target="_blank"
     rel="noopener noreferrer"
-    aria-label="X"
-    class="w-14 h-14 flex items-center justify-center rounded-xl bg-black text-white hover:bg-gray-800 hover:scale-105 transition"
+    class="flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-2xl hover:shadow-md hover:border-gray-300 transition group"
   >
 
-    <!-- X Icon -->
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="w-9 h-9"
-      viewBox="0 0 24 24"
-      fill="currentColor"
+    <div
+      class="w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-xl bg-black text-white group-hover:bg-gray-800 transition"
     >
-      <path
-        d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817-5.963 6.817H1.684l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"
-      />
-    </svg>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-9 h-9"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path
+          d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817-5.963 6.817H1.684l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"
+        />
+      </svg>
+    </div>
+
+    <div class="min-w-0">
+      <p class="text-sm text-gray-500">
+        X
+      </p>
+
+      <p class="font-medium text-gray-900 truncate">
+        @q1anyuyang
+      </p>
+    </div>
 
   </a>
 
