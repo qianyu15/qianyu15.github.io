@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-black text-zinc-100 font-mono selection:bg-zinc-700">
+
+<!-- HERO -->
+<header class="relative border-b border-zinc-900">
+  <div class="max-w-5xl mx-auto px-6 py-28">
+
+    <p class="text-zinc-500 text-sm tracking-widest">PORTFOLIO</p>
+
+    <h1 class="text-5xl md:text-7xl font-bold mt-4 leading-tight">
+      Qianyu Yang
+    </h1>
+
+    <p class="text-zinc-400 mt-6 max-w-xl text-lg">
+      Full Stack Developer building web apps with HTML, CSS, JavaScript, Python.
+    </p>
+
+    <div class="mt-10 flex gap-4">
+      <a href="#projects" class="px-5 py-2 bg-white text-black rounded-md hover:bg-zinc-200 transition">
+        View Projects
+      </a>
+      <a href="#contact" class="px-5 py-2 border border-zinc-700 rounded-md hover:border-zinc-400 transition">
+        Contact
+      </a>
+    </div>
+
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-6 py-20 space-y-24">
+
+<!-- ABOUT -->
+<section>
+  <h2 class="text-xl text-zinc-400 mb-6 tracking-widest">ABOUT</h2>
+
+  <div class="border border-zinc-900 rounded-xl p-6 bg-zinc-950">
+    <p class="text-zinc-300 leading-relaxed">
+      Webアプリケーションの設計から実装までを一貫して行う開発者。
+      UIとロジックの両面を扱い、小規模プロダクトを素早く形にすることを得意とする。
+    </p>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section>
+  <h2 class="text-xl text-zinc-400 mb-6 tracking-widest">SKILLS</h2>
+
+  <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+    <div class="border border-zinc-900 p-4 rounded-lg bg-zinc-950">HTML / CSS</div>
+    <div class="border border-zinc-900 p-4 rounded-lg bg-zinc-950">JavaScript</div>
+    <div class="border border-zinc-900 p-4 rounded-lg bg-zinc-950">Node.js</div>
+    <div class="border border-zinc-900 p-4 rounded-lg bg-zinc-950">Python</div>
+    <div class="border border-zinc-900 p-4 rounded-lg bg-zinc-950">REST API</div>
+    <div class="border border-zinc-900 p-4 rounded-lg bg-zinc-950">Git / GitHub</div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <h2 class="text-xl text-zinc-400 mb-6 tracking-widest">PROJECTS</h2>
+
+  <div class="space-y-6">
+
+    <article class="border border-zinc-900 rounded-xl p-6 bg-zinc-950 hover:border-zinc-700 transition">
+      <h3 class="text-2xl font-semibold">Snake API</h3>
+      <p class="text-zinc-400 mt-3">
+      A lightweight serverless API that dynamically generates GitHub contribution snake SVGs.
+
+
+      </p>
+
+      <div class="mt-4 text-sm text-zinc-500">
+        Tech: Next.js / Vercel
+      </div>
+
+      <div class="mt-5 flex gap-4">
+        <a class="text-zinc-200 hover:text-white underline" href="https://github.com/qianyu15/snake-api.git">GitHub</a>
+  
+      </div>
+    </article>
+
+    <article class="border border-zinc-900 rounded-xl p-6 bg-zinc-950 hover:border-zinc-700 transition">
+      <h3 class="text-2xl font-semibold"></h3>
+      <p class="text-zinc-400 mt-3">
+       HTMLとTailwind CSSを使用して作成したポートフォリオサイト。
+      </p>
+
+      <div class="mt-4 text-sm text-zinc-500">
+        Tech: HTML / Tailwind
+      </div>
+
+      <div class="mt-5 flex gap-4">
+        <a class="text-zinc-200 hover:text-white underline" href="https://github.com/qianyu15/qianyu15.github.io">GitHub</a>
+        <a class="text-zinc-200 hover:text-white underline" href="https://qianyu15.github.io/">Live</a>
+      </div>
+    </article>
+<article class="border border-zinc-900 rounded-xl p-6 bg-zinc-950 hover:border-zinc-700 transition">
+      <h3 class="text-2xl font-semibold">Ball Factory Puzzle</h3>
+      <p class="text-zinc-400 mt-3">
+ 
+ブラウザだけで動く、物体を配置して坂道や装置を組み合わせ、ボールをゴールへ導くパズルゲーム
+
+      </p>
+
+      <div class="mt-4 text-sm text-zinc-500">
+        Tech: HTML / JS / Canvas API
+      </div>
+
+      <div class="mt-5 flex gap-4">
+        <a class="text-zinc-200 hover:text-white underline" href="https://github.com/qianyu15/ball-puzzle">GitHub</a>
+        <a class="text-zinc-200 hover:text-white underline" href="https://qianyu15.github.io/ball-puzzle">Live</a>
+      </div>
+    </article>
+    <article class="border border-zinc-900 rounded-xl p-6 bg-zinc-950 hover:border-zinc-700 transition">
+      <h3 class="text-2xl font-semibold">Profile README Generator</h3>
+      <p class="text-zinc-400 mt-3">
+      GitHubユーザー名を入力するだけで、GitHub APIからプロフィール情報を取得し、プロフィール用の README.md を自動生成するWebツール
+
+
+      </p>
+
+      <div class="mt-4 text-sm text-zinc-500">
+        Tech: HTML / JS / GitHub API
+      </div>
+
+      <div class="mt-5 flex gap-4">
+        <a class="text-zinc-200 hover:text-white underline" href="https://github.com/qianyu15/profile-readme">GitHub</a>
+        <a class="text-zinc-200 hover:text-white underline" href="https://qianyu15.github.io/profile-readme">Live</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<!-- CONTACT -->
+<section id="contact">
+  <h2 class="text-xl text-zinc-400 mb-6 tracking-widest">CONTACT</h2>
+
+  <div class="border border-zinc-900 rounded-xl p-6 bg-zinc-950">
+
+  <div class="flex flex-col md:flex-row gap-10">
+
+    <!-- CONTACT FORM -->
+    <form
+      id="contact-form"
+      action="https://formspree.io/f/xwvdykqp"
+      method="POST"
+      class="space-y-6 flex-1"
+    >
+
+      <!-- 名前 -->
+      <div>
+        <label for="name" class="block text-sm text-zinc-400 mb-2">
+          Name
+        </label>
+
+        <input
+          type="text"
+          id="name"
+          name="name"
+          required
+          placeholder="Your Name"
+          class="w-full px-4 py-3 bg-black border border-zinc-800 rounded-lg
+                 text-zinc-100 placeholder-zinc-600
+                 focus:outline-none focus:border-zinc-500 transition"
+        />
+      </div>
+
+      <!-- メール -->
+      <div>
+        <label for="email" class="block text-sm text-zinc-400 mb-2">
+          Email
+        </label>
+
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          placeholder="example@mail.com"
+          class="w-full px-4 py-3 bg-black border border-zinc-800 rounded-lg
+                 text-zinc-100 placeholder-zinc-600
+                 focus:outline-none focus:border-zinc-500 transition"
+        />
+      </div>
+
+      <!-- 件名 -->
+      <div>
+        <label for="subject" class="block text-sm text-zinc-400 mb-2">
+          Subject
+        </label>
+
+        <input
+          type="text"
+          id="subject"
+          name="subject"
+          required
+          placeholder="お問い合わせ内容"
+          class="w-full px-4 py-3 bg-black border border-zinc-800 rounded-lg
+                 text-zinc-100 placeholder-zinc-600
+                 focus:outline-none focus:border-zinc-500 transition"
+        />
+      </div>
+
+      <!-- メッセージ -->
+      <div>
+        <label for="message" class="block text-sm text-zinc-400 mb-2">
+          Message
+        </label>
+
+        <textarea
+          id="message"
+          name="message"
+          rows="6"
+          required
+          placeholder="お問い合わせ内容を入力してください"
+          class="w-full px-4 py-3 bg-black border border-zinc-800 rounded-lg
+                 text-zinc-100 placeholder-zinc-600
+                 focus:outline-none focus:border-zinc-500 transition resize-none"
+        ></textarea>
+      </div>
+
+      <!-- 送信ボタン -->
+      <button
+        id="submit-button"
+        type="submit"
+        class="px-5 py-3 bg-white text-black rounded-md
+               hover:bg-zinc-200 transition"
+      >
+        Send Message
+      </button>
+
+    </form>
+
+
+    <!-- SOCIAL LINKS -->
+    <div class="md:w-48 flex md:flex-col gap-3">
+
+      <!-- GitHub -->
+      <a
+        href="https://github.com/qianyu15"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 px-4 py-3
+               border border-zinc-800 rounded-lg
+               text-zinc-300 hover:text-white hover:border-zinc-500
+               transition"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="w-5 h-5 shrink-0"
+        >
+          <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2.17c-3.2.7-3.88-1.36-3.88-1.36-.53-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.68 1.25 3.33.96.1-.74.4-1.25.73-1.54-2.55-.29-5.23-1.28-5.23-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.47.11-3.06 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.77.11 3.06.73.81.73 1.84 1.18 3.1 0 4.42-2.69 5.4-5.25 5.68.41.35.78 1.04.78 2.1v3.11c0 .31.21.67.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/>
+        </svg>
+
+        GitHub
+      </a>
+
+
+      <!-- Email -->
+      <a
+        href="mailto:qianyuyang.vip@gmail.com"
+        class="inline-flex items-center gap-2 px-4 py-3
+               border border-zinc-800 rounded-lg
+               text-zinc-300 hover:text-white hover:border-zinc-500
+               transition"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          class="w-5 h-5 shrink-0"
+        >
+          <rect x="3" y="5" width="18" height="14" rx="2"/>
+          <path d="m3 7 9 6 9-6"/>
+        </svg>
+
+        Email
+      </a>
+
+
+      <!-- X -->
+      <a
+        href="https://x.com/q1anyuyang"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 px-4 py-3
+               border border-zinc-800 rounded-lg
+               text-zinc-300 hover:text-white hover:border-zinc-500
+               transition"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="w-5 h-5 shrink-0"
+        >
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817-5.967 6.817H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z"/>
+        </svg>
+
+        X
+      </a>
+
+    </div>
+
+  </div>
+
+</div>
+</section>
+
+</main>
+
+<footer class="border-t border-zinc-900 py-10 text-center text-zinc-600">
+  © 2026 Qianyu Yang
+</footer><script>
+  const form = document.getElementById("contact-form");
+  const submitButton = document.getElementById("submit-button");
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Sending...";
+
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        body: formData,
+        headers: {
+          Accept: "application/json"
+        }
+      });
+
+      if (response.ok) {
+        showToast("Message sent successfully!");
+        form.reset();
+      } else {
+        showToast("Failed to send the message.", true);
+      }
+    } catch (error) {
+      showToast("A network error occurred.", true);
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = "Send Message";
+    }
+  });
+
+  function showToast(message, isError = false) {
+    const toast = document.createElement("div");
+
+    toast.textContent = message;
+
+    toast.className = `
+      fixed bottom-6 right-6 z-50
+      px-5 py-3 rounded-lg
+      text-sm
+      shadow-lg
+      transition-all duration-300
+      ${isError
+        ? "bg-red-500 text-white"
+        : "bg-white text-black"}
+    `;
+
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+      toast.classList.add("opacity-0", "translate-y-2");
+
+      setTimeout(() => {
+        toast.remove();
+      }, 300);
+    }, 3000);
+  }
+</script>
+</body>
+</html>
+
